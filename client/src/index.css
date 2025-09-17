@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+
+body {
+    background-color: #f7f8fc;
+}
+
+@layer components {
+    .input_form {
+        @apply border rounded-md text-gray-400 w-full p-2
+    }
+}

@@ -1,0 +1,11 @@
+
+
+# Ignora node_modules en cualquier subcirectorio
+**/node_modules/
+
+# Otros archivos a ignorar (opcional)
+**/.env
+**/.DS_Store
+**/dist
+
+notas.txt
