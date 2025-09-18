@@ -11,17 +11,41 @@ const Form = () => {
     selectedFile: "",
   });
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(postData)
+  }
+
+  const convertToBase64 = (selectedFile) => {
+    const reader = new FileReader()
+    reader.readAsDataURL(selectedFile)
+    reader.onload = () => {
+      //console.log('called: ', reader)
+      //setBase64IMG(reader.result)
+      setPostData(prevData => ({...prevData, selectedFile:reader.result}))
+    }
+  }
+
   const onDrop = useCallback((acceptedFiles) => {
     // Do something with the files
+    //console.log(acceptedFiles[0])
+    convertToBase64(acceptedFiles[0])
   }, []);
   const { getRootProps, getInputProps, isDragActive, acceptedFiles } =
-    useDropzone({ onDrop });
+    useDropzone({ 
+      onDrop,
+      accept: {
+        'image/*': ['jpeg', 'png', '.jpg', '.gif']
+      },
+      maxFiles: 1
+    });
 
   return (
     <div className={`p-4 shadow-lg mt-8`}>
       <form
         action=""
         className={`p-1 flex flex-col justify-center gap-y-6`}
+        onSubmit={handleSubmit}
       >
         <h4 className={`text-2xl`}>
           Creando una Memoria
