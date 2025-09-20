@@ -2,6 +2,11 @@ import React, { useState, useCallback } from "react";
 
 import { useDropzone } from "react-dropzone";
 
+/* store redux */
+import { useDispatch } from "react-redux";
+/* actions redux */
+import { createPost } from "../actions/posts";
+
 const Form = () => {
   const [postData, setPostData] = useState({
     creator: "",
@@ -11,9 +16,12 @@ const Form = () => {
     selectedFile: "",
   });
 
+  const dispatch = useDispatch();
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(postData)
+    dispatch(createPost(postData))
   }
 
   const convertToBase64 = (selectedFile) => {

@@ -1,8 +1,19 @@
 
+import { useEffect } from "react";
 import Form from "../Form/Form";
 import Posts from "../Posts/Posts";
+/* usar store para redux */
+import { useDispatch } from "react-redux";
+
+/* usar actions de redux */
+import { getPosts } from "../actions/posts";
 
 const Home = () => {
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(getPosts())
+  }, [dispatch])
   return (
     <div>
       <div className={`grid lg:grid-cols-5 lg:grid-rows-4 mx-10 gap-4 `}>
