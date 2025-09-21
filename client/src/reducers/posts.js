@@ -7,7 +7,7 @@ export default (state = {posts:[]}, action) => {
         case FETCH_ALL:
             return {
                 ...state,
-                posts: action.payload.data
+                posts: action.payload
             }
         default:
             return state

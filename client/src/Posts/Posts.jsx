@@ -1,21 +1,40 @@
-
+import { useEffect } from "react";
 import Post from "./Post/Post";
+/* tienda store redux */
+import { useSelector } from "react-redux";
+/* material ui */
+
+import CircularProgress from '@mui/material/CircularProgress';
 
 const Posts = () => {
 
-  const posts = [1,2,3,4,5,6,7,8]
+  
+  const {posts} = useSelector((state) => state.posts)
+  console.log('Posts en componente Posts:', posts) // Debug
+  useEffect(() => {
+    console.log('Posts component mounted')
+  }, [])
+
+
   return (
-    <div className={`grid lg:grid-cols-4 lg:grid-rows-4 gap-x-10 gap-y-16 mt-10`}>
+
+    !posts.length ? <CircularProgress color="secondary" /> : (
+      <div className={`grid lg:grid-cols-4 lg:grid-rows-4 gap-x-10 gap-y-16 mt-10`}>
+        {
+          posts.map((post) => (
+            <Post key={post._id} post={post}/>
+          ))
+        }
       
-      {
-        posts.map((post, index) => (
-          <Post/>
-        ))
-      }
       
       
-    </div>
+      </div>
+    )
+    
   )
 }
 
 export default Posts
+
+
+
