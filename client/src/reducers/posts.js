@@ -11,6 +11,8 @@ export default (state = {posts:[]}, action) => {
             }
         case CREATE:
             return {...state, posts: [...state.posts, action.payload]}
+        case UPDATE:
+            return {...state, posts: state.posts.map((post) => post._id === action.payload._id ? action.payload : post)}
         default:
             return state
     }

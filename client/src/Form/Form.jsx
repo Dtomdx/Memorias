@@ -1,15 +1,15 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { useNavigate} from "react-router-dom";
 
 /* lib para subir imgs */
 import { useDropzone } from "react-dropzone";
 
 /* store redux */
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 /* actions redux */
-import { createPost } from "../actions/posts";
+import { createPost, updatePost } from "../actions/posts";
 
-const Form = () => {
+const Form = ({currentId, setCurrentId}) => {
   const [postData, setPostData] = useState({
     creator: "",
     title: "",
@@ -18,13 +18,28 @@ const Form = () => {
     selectedFile: "",
   });
 
+  const post = useSelector((state) => currentId ? state.posts.posts.find((p) => p._id === currentId): null)
+
   const dispatch = useDispatch();
   const history = useNavigate()
+
+  useEffect(() => {
+    if (post){
+      setPostData(post);
+    }
+  },[post])
 
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(createPost({...postData}, history))
+    if(currentId){
+      //Editando -> actualizar
+      dispatch(updatePost(currentId, postData))
+    } else{
+      //Creado -> Crear post
+      dispatch(createPost({...postData}, history))
+    }
+    
     clear()
   }
 
@@ -72,18 +87,11 @@ const Form = () => {
         onSubmit={handleSubmit}
       >
         <h4 className={`text-2xl`}>
-          Creando una Memoria
+          {
+            currentId ? "Editando": "Creando"
+          } una Memoria
         </h4>
-        <input
-          name="creator"
-          className={`input_form`}
-          placeholder="Creator"
-          
-          value={postData.creator}
-          onChange={(e) =>
-            setPostData({ ...postData, creator: e.target.value })
-          }
-        />
+        
         <input
           name="title"
           className={`input_form`}

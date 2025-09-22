@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 
 import CircularProgress from '@mui/material/CircularProgress';
 
-const Posts = () => {
+const Posts = ({setCurrentId}) => {
 
   
   const {posts} = useSelector((state) => state.posts)
@@ -19,7 +19,7 @@ const Posts = () => {
       <div className={`grid lg:grid-cols-4 lg:grid-rows-4 gap-x-10 gap-y-16 mt-10`}>
         {
           posts.map((post) => (
-            <Post key={post._id} post={post}/>
+            <Post key={post._id} post={post} setCurrentId={setCurrentId}/>
           ))
         }
       
