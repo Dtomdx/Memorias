@@ -10,12 +10,10 @@ import { getPosts } from "../actions/posts";
 
 const Home = () => {
   const dispatch = useDispatch()
-  const posts = useSelector((state) => state.posts) // Agrega esta línea
-
-  console.log('Posts en Home:', posts) // Debug
+  
 
   useEffect(() => {
-    console.log('useEffect ejecutándose') // Debug
+    
     dispatch(getPosts())
   }, [dispatch])
   return (

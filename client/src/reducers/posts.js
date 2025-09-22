@@ -9,6 +9,8 @@ export default (state = {posts:[]}, action) => {
                 ...state,
                 posts: action.payload
             }
+        case CREATE:
+            return {...state, posts: [...state.posts, action.payload]}
         default:
             return state
     }

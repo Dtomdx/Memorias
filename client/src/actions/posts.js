@@ -12,10 +12,11 @@ export const getPosts = () => async(dispatch) => {
     }
 }
 
-export const createPost = (post) => async(dispatch) => {
+export const createPost = (post, history) => async(dispatch) => {
     try {
         console.log("Enviando post: ", post)
         const { data } = await api.createPost(post)
+        history(`/posts`)
         dispatch({type: CREATE, payload: data});
     } catch (error) {
         console.log(error.message)

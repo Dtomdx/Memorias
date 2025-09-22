@@ -10,10 +10,7 @@ const Posts = () => {
 
   
   const {posts} = useSelector((state) => state.posts)
-  console.log('Posts en componente Posts:', posts) // Debug
-  useEffect(() => {
-    console.log('Posts component mounted')
-  }, [])
+  
 
 
   return (

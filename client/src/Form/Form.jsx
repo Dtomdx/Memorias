@@ -1,5 +1,7 @@
 import React, { useState, useCallback } from "react";
+import { useNavigate} from "react-router-dom";
 
+/* lib para subir imgs */
 import { useDropzone } from "react-dropzone";
 
 /* store redux */
@@ -17,11 +19,22 @@ const Form = () => {
   });
 
   const dispatch = useDispatch();
+  const history = useNavigate()
 
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(createPost(postData))
+    dispatch(createPost({...postData}, history))
+    clear()
+  }
+
+  const clear = () => {
+    setPostData({
+      title: '',
+      message: '',
+      tags: '',
+      selectedFile: ''
+    })
   }
 
   const convertToBase64 = (selectedFile) => {
@@ -43,7 +56,10 @@ const Form = () => {
     useDropzone({ 
       onDrop,
       accept: {
-        'image/*': ['jpeg', 'png', '.jpg', '.gif']
+        'image/jpeg': ['.jpeg', '.jpg'],
+        'image/png': ['.png'],
+        'image/gif': ['.gif'],
+        'image/webp': ['.webp']
       },
       maxFiles: 1
     });
