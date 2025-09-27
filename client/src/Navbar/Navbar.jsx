@@ -1,7 +1,8 @@
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation, Links } from "react-router-dom";
 
 import memoriesLogo from "../images/memoriesLogo.png";
 import memoriesText from "../images/memoriesText.png";
+import Auth from "../components/Auth/Auth";
 
 const Navbar = () => {
   return (
@@ -25,9 +26,9 @@ const Navbar = () => {
         <p className={`flex items-center text-center `}>
           User
         </p>
-        <button className={`ml-5`}>
-          Login
-        </button>
+        <Link className={`ml-5`} to="/auth" >
+          Sign
+        </Link>
       </div>
     </nav>
   );

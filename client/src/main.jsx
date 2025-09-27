@@ -2,7 +2,8 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
-
+/* login google */
+import { GoogleOAuthProvider } from '@react-oauth/google'
 /* redux */
 import {Provider} from "react-redux";
 import {createStore, applyMiddleware, compose} from "redux";
@@ -13,10 +14,16 @@ const store = createStore(reducers, compose(applyMiddleware(thunk)))
 //para dev 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
+
+
+const CLIENT_ID = "451321955531-660jh2974q55sebnthrm7fammqp88ekv.apps.googleusercontent.com"
+
 createRoot(document.getElementById('root')).render(
-  <Provider store={store}>
-    <StrictMode>
-      <App />
-    </StrictMode>,
-  </Provider>
+  <GoogleOAuthProvider clientId={CLIENT_ID}>
+    <Provider store={store}>
+      <StrictMode>
+        <App />
+      </StrictMode>,
+    </Provider>
+  </GoogleOAuthProvider>
 )
