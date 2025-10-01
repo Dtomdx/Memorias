@@ -3,6 +3,7 @@ import Input from "./Input";
 import { useState } from "react";
 import Grid from "@mui/material/Grid";
 import { GoogleLogin } from "@react-oauth/google";
+import { jwtDecode } from "jwt-decode"
 //import Button from "@mui/material/Button";
 import { Button, Container, Paper, Typography } from "@mui/material";
 /* redux store */
@@ -19,7 +20,7 @@ const initialState = {
 };
 
 const Auth = () => {
-  const [isSignup, setSignup] = useState(true);
+  const [isSignup, setSignup] = useState(false);
   const [formData, setFormData] = useState(initialState);
   const dispatch = useDispatch()
   const history = useNavigate()
@@ -39,7 +40,16 @@ const Auth = () => {
     setSignup((prevIsSignup) => !prevIsSignup);
 
   }
-  const googleSuccess = () => {};
+  const googleSuccess = async(res) => {
+    const result = jwtDecode(res.credential)
+    const token = res.credential
+    try {
+      dispatch({type:"AUTH", payload: {result, token}});
+      history("/");
+    } catch (error) {
+      console.log(error)
+    }
+  };
 
   const googleFailure = () => {};
   //mx-10 h-screen flex justify-center items-center

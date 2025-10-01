@@ -16,7 +16,7 @@ const Posts = ({setCurrentId}) => {
   return (
 
     !posts.length ? <CircularProgress color="secondary" /> : (
-      <div className={`grid lg:grid-cols-4 lg:grid-rows-4 gap-x-10 gap-y-16 mt-10`}>
+      <div className={`grid lg:grid-cols-4 lg:grid-rows-2 gap-x-5 gap-y-16 mt-10 rounded-2xl`}>
         {
           posts.map((post) => (
             <Post key={post._id} post={post} setCurrentId={setCurrentId}/>

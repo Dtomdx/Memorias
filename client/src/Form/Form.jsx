@@ -11,7 +11,7 @@ import { createPost, updatePost } from "../actions/posts";
 
 const Form = ({currentId, setCurrentId}) => {
   const [postData, setPostData] = useState({
-    creator: "",
+    
     title: "",
     message: "",
     tags: "",
@@ -19,7 +19,7 @@ const Form = ({currentId, setCurrentId}) => {
   });
 
   const post = useSelector((state) => currentId ? state.posts.posts.find((p) => p._id === currentId): null)
-
+  const user = JSON.parse(localStorage.getItem("profile"));
   const dispatch = useDispatch();
   const history = useNavigate()
 
@@ -34,10 +34,10 @@ const Form = ({currentId, setCurrentId}) => {
     e.preventDefault();
     if(currentId){
       //Editando -> actualizar
-      dispatch(updatePost(currentId, postData))
+      dispatch(updatePost(currentId, {...postData, name: user?.name}))
     } else{
       //Creado -> Crear post
-      dispatch(createPost({...postData}, history))
+      dispatch(createPost({...postData, name: user?.name}, history))
     }
     
     clear()
