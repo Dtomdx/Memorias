@@ -46,6 +46,15 @@ export const deletePost = async(req, res) => {
         
         res.json({message: "Post deleted successfully"});
     } catch (error) {
-        res.status()
+        res.status(409).json({message: error.message})
+    }
+}
+
+export const likePost = async(req, res) => {
+    const dato = req.params
+    try {
+        res.status(201).json({message: "Post test"})
+    } catch (error) {
+        res.status(409).json({message: error.message})
     }
 }
