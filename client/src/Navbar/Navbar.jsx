@@ -7,6 +7,7 @@ import Auth from "../components/Auth/Auth";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Avatar, Button } from "@mui/material";
+import { jwtDecode } from "jwt-decode";
 
 
 const Navbar = () => {
@@ -52,10 +53,10 @@ const Navbar = () => {
         user ? (
           <div className={`flex md:justify-end md:w-48 md:items-center sm:w-auto sm:mt-5 sm:justify-center`}>
             <Avatar>
-              {user.name.charAt(0)}
+              {user.result.name.charAt(0)}
             </Avatar>
             <p className={`flex items-center text-center `}>
-              {user.name}
+              {user.result.name}
             </p>
             <Button variant="contained" className={`ml-5`} onClick={logout} color="secondary">
               Logout
