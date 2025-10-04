@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 /* lib para subir imgs */
 import { useDropzone } from "react-dropzone";
@@ -9,76 +9,61 @@ import { useDispatch, useSelector } from "react-redux";
 /* actions redux */
 import { createPost, updatePost } from "../actions/posts";
 
-const Form = ({currentId, setCurrentId}) => {
+const Form = ({ currentId, setCurrentId }) => {
   const [postData, setPostData] = useState({
-    
     title: "",
     message: "",
     tags: "",
     selectedFile: "",
   });
 
-  const post = useSelector((state) => currentId ? state.posts.posts.find((p) => p._id === currentId): null)
+  const post = useSelector((state) =>
+    currentId ? state.posts.posts.find((p) => p._id === currentId) : null
+  );
   const user = JSON.parse(localStorage.getItem("profile"));
   const dispatch = useDispatch();
-  const history = useNavigate()
+  const history = useNavigate();
 
   useEffect(() => {
-    if (post){
+    if (post) {
       setPostData(post);
     }
-  },[post])
-
+  }, [post]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(currentId){
+    if (currentId) {
       //Editando -> actualizar
-      dispatch(updatePost(currentId, {...postData, name: user?.name}))
-    } else{
+      dispatch(updatePost(currentId, { ...postData, name: user?.name }));
+    } else {
       //Creado -> Crear post
-      dispatch(createPost({...postData, name: user?.name}, history))
+      dispatch(createPost({ ...postData, name: user?.name }, history));
     }
-    
-    clear()
-  }
+
+    clear();
+  };
 
   const clear = () => {
-    setCurrentId(null)
+    setCurrentId(null);
     setPostData({
-      title: '',
-      message: '',
-      tags: '',
-      selectedFile: ''
-    })
-  }
+      title: "",
+      message: "",
+      tags: "",
+      selectedFile: "",
+    });
+  };
 
   const convertToBase64 = (selectedFile) => {
-    const reader = new FileReader()
-    reader.readAsDataURL(selectedFile)
+    //console.log(selectedFile.target.files[0])
+    const reader = new FileReader();
+    reader.readAsDataURL(selectedFile);
     reader.onload = () => {
-      //console.log('called: ', reader)
-      //setBase64IMG(reader.result)
-      setPostData(prevData => ({...prevData, selectedFile:reader.result}))
-    }
-  }
+      
+      setPostData((prevData) => ({ ...prevData, selectedFile: reader.result }));
+    };
+  };
 
-  const onDrop = useCallback((acceptedFiles) => {
-    // Do something with the files
-    //console.log(acceptedFiles[0])
-    convertToBase64(acceptedFiles[0])
-  }, []);
-  const { getRootProps, getInputProps, isDragActive, acceptedFiles } =
-    useDropzone({ 
-      onDrop,
-      accept: {
-        'image/jpeg': ['.jpeg', '.jpg'],
-        'image/png': ['.png'],
-        'image/gif': ['.gif'],
-        'image/webp': ['.webp']
-      },
-      maxFiles: 1
-    });
+  
 
   return (
     <div className={`p-4 shadow-lg mt-8`}>
@@ -88,16 +73,13 @@ const Form = ({currentId, setCurrentId}) => {
         onSubmit={handleSubmit}
       >
         <h4 className={`text-2xl`}>
-          {
-            currentId ? "Editando": "Creando"
-          } una Memoria
+          {currentId ? "Editando" : "Creando"} una Memoria
         </h4>
-        
+
         <input
           name="title"
           className={`input_form`}
           placeholder="Titulo"
-          
           value={postData.title}
           onChange={(e) => setPostData({ ...postData, title: e.target.value })}
         />
@@ -105,7 +87,6 @@ const Form = ({currentId, setCurrentId}) => {
           name="message"
           className={`input_form`}
           placeholder="Mensaje"
-          
           value={postData.message}
           onChange={(e) =>
             setPostData({ ...postData, message: e.target.value })
@@ -115,25 +96,34 @@ const Form = ({currentId, setCurrentId}) => {
           name="tags"
           className={`input_form`}
           placeholder="Etiqueta"
-          
           value={postData.tags}
           onChange={(e) => setPostData({ ...postData, tags: e.target.value })}
         />
-        <div {...getRootProps()} className={`shadow-2xl`}>
-          <input {...getInputProps()} />
-          {isDragActive ? (
-            <p>Drop the files here ...</p>
-          ) : (
-            <p>Sube tu imagen</p>
-          )}
+        <div className={`flex flex-col`}>
+          <label
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            for="user_avatar"
+          >
+            Subir Imagen
+          </label>
+          <input
+            name="selectedFile"
+            className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50  focus:outline-none"
+            type="file"
+            onChange={(e) => convertToBase64(e.target.files[0])}
+          />
         </div>
         <div>
-          <button className={`mb-2.5 bg-blue-800 text-white uppercase w-full rounded-md py-1`}>
+          <button
+            className={`mb-2.5 bg-blue-800 text-white uppercase w-full rounded-md py-1`}
+          >
             Enviar
           </button>
         </div>
         <div>
-          <button className={`mb-2.5 bg-red-700 text-white uppercase w-full rounded-md py-1`}>
+          <button
+            className={`mb-2.5 bg-red-700 text-white uppercase w-full rounded-md py-1`}
+          >
             Limpiar
           </button>
         </div>
