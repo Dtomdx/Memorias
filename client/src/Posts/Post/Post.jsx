@@ -85,12 +85,14 @@ const Post = ({ post, setCurrentId }) => {
           <button className={`cursor-pointer`} onClick={() => dispatch(likePost(post._id))}>
             <Likes className={`text-blue-500`}/>
           </button>
-          {(user?.sub === post?.creator ||
-            user?._id === post?.creator) && (
-            <button onClick={()=> dispatch(deletePost(post._id))}>
-              <DeleteIcon className={`text-blue-500`}/>
-            </button>
-          )}
+          {
+            (user?.result?.sub === post?.creator ||
+              user?.result?._id === post?.creator) && (
+              <button onClick={()=> dispatch(deletePost(post._id))}>
+                <DeleteIcon className={`text-blue-500`}/>
+              </button>
+            )
+          }
         </div>
       </div>
     </div>

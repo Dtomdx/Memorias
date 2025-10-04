@@ -34,10 +34,10 @@ const Form = ({ currentId, setCurrentId }) => {
     e.preventDefault();
     if (currentId) {
       //Editando -> actualizar
-      dispatch(updatePost(currentId, { ...postData, name: user?.name }));
+      dispatch(updatePost(currentId, { ...postData, name: user?.result.name }));
     } else {
       //Creado -> Crear post
-      dispatch(createPost({ ...postData, name: user?.name }, history));
+      dispatch(createPost({ ...postData, name: user?.result?.name }, history));
     }
 
     clear();
@@ -62,6 +62,16 @@ const Form = ({ currentId, setCurrentId }) => {
       setPostData((prevData) => ({ ...prevData, selectedFile: reader.result }));
     };
   };
+
+  if(!user?.result?.name){
+    return (
+      <div className={`p-8`}>
+        <p className={`flex justify-center shadow-2xl rounded-2xl p-5`}>
+          Por favor Inicia session para crear tus propias memorias
+        </p>
+      </div>
+    )
+  }
 
   
 
@@ -115,6 +125,7 @@ const Form = ({ currentId, setCurrentId }) => {
         </div>
         <div>
           <button
+            type="submit"
             className={`mb-2.5 bg-blue-800 text-white uppercase w-full rounded-md py-1`}
           >
             Enviar
@@ -122,7 +133,9 @@ const Form = ({ currentId, setCurrentId }) => {
         </div>
         <div>
           <button
+            type="button"
             className={`mb-2.5 bg-red-700 text-white uppercase w-full rounded-md py-1`}
+            onClick={clear}
           >
             Limpiar
           </button>
