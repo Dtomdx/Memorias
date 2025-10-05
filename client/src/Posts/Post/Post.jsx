@@ -19,28 +19,45 @@ import {
 } from "@mui/material";
 
 import { likePost } from "../../actions/posts";
+import { useNavigate } from "react-router-dom";
 
 const Post = ({ post, setCurrentId }) => {
   const dispatch = useDispatch();
   const user = JSON.parse(localStorage.getItem("profile"));
-  
+  const history = useNavigate()
+
   const Likes = () => {
-        
     if (post.likes.length > 0) {
-      return post.likes.find((like) => like === (user?.sub || user?.result?._id))
-        ? (
-          <><ThumbUpAltIcon fontSize="small" />&nbsp;{post.likes.length > 2 ? `You and ${post.likes.length + 1} others` : `${post.likes.length} like${post.likes.length > 1 ? 's' : ''}` }</>
-        ) : 
-        (
-          //usuario diferente solo pone un like
-          <><ThumbUpOffAltIcon fontSize="small" />&nbsp;{post.likes.length} {post.likes.length === 1 ? 'Like' : 'Likes'}</> 
-        );
+      return post.likes.find(
+        (like) => like === (user?.sub || user?.result?._id)
+      ) ? (
+        <>
+          <ThumbUpAltIcon fontSize="small" />
+          &nbsp;
+          {post.likes.length > 2
+            ? `You and ${post.likes.length + 1} others`
+            : `${post.likes.length} like${post.likes.length > 1 ? "s" : ""}`}
+        </>
+      ) : (
+        //usuario diferente solo pone un like
+        <>
+          <ThumbUpOffAltIcon fontSize="small" />
+          &nbsp;{post.likes.length} {post.likes.length === 1 ? "Like" : "Likes"}
+        </>
+      );
     }
 
-    return <><ThumbUpOffAltIcon fontSize="small" />&nbsp;Like</>;
+    return (
+      <>
+        <ThumbUpOffAltIcon fontSize="small" />
+        &nbsp;Like
+      </>
+    );
   };
+
+  const openPost = () => history(`/posts/${post._id}`);
   return (
-    <div className={`col-span-1 rounded-2xl shadow-2xl cursor-pointer `}>
+    <div className={`col-span-1 rounded-2xl shadow-2xl cursor-pointer `} onClick={openPost}>
       <div className={` relative`}>
         <div className={``}>
           <img
@@ -82,17 +99,18 @@ const Post = ({ post, setCurrentId }) => {
           </Typography>
         </div>
         <div className={`flex flex-row justify-between`}>
-          <button className={`cursor-pointer`} onClick={() => dispatch(likePost(post._id))}>
-            <Likes className={`text-blue-500`}/>
+          <button
+            className={`cursor-pointer`}
+            onClick={() => dispatch(likePost(post._id))}
+          >
+            <Likes className={`text-blue-500`} />
           </button>
-          {
-            (user?.result?.sub === post?.creator ||
-              user?.result?._id === post?.creator) && (
-              <button onClick={()=> dispatch(deletePost(post._id))}>
-                <DeleteIcon className={`text-blue-500`}/>
-              </button>
-            )
-          }
+          {(user?.result?.sub === post?.creator ||
+            user?.result?._id === post?.creator) && (
+            <button onClick={() => dispatch(deletePost(post._id))}>
+              <DeleteIcon className={`text-blue-500`} />
+            </button>
+          )}
         </div>
       </div>
     </div>
