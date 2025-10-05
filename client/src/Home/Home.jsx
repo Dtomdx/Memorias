@@ -5,7 +5,7 @@ import Posts from "../Posts/Posts";
 import { useDispatch, useSelector } from "react-redux";
 
 /* usar actions de redux */
-import { getPosts } from "../actions/posts";
+import {  getPostsBySearch } from "../actions/posts";
 import { useLocation, useNavigate } from "react-router-dom";
 
 
@@ -27,6 +27,13 @@ const Home = () => {
   const searchQuery = query.get("searchQuery");
   const [search, setSearch] = useState("");
   const [tags, setTags] = useState([]);
+
+  const handleKeyPress = (e)=>{
+      if(e.keyCode === 13){
+          //search post
+          searchPost();
+      }
+  };
 
   const searchPost = () => {
     if(search.trim() || tags){
@@ -52,6 +59,7 @@ const Home = () => {
               name="search"
               variant="outlined"
               label="Buscar Memorias"
+              onKeyPress={handleKeyPress}
               fullWidth
               value={search}
               onChange={(e) => setSearch(e.target.value)}
