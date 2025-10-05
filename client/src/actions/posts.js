@@ -1,6 +1,17 @@
 import {FETCH_ALL, FETCH_BY_SEARCH, START_LOADING, END_LOADING, CREATE, UPDATE, DELETE, FETCH_POST} from "../constants/actionTypes";
 import * as api from "../api";
 
+/* obtener el post individual -> postdetails */
+export const getPost = (id)=>async(dispatch) => {
+    try {
+        
+        const {data} = await api.fetchPost(id);
+        dispatch({type: FETCH_POST, payload: data});
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+}
 
 export const getPosts = (page) => async(dispatch) => {
     try {
