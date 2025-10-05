@@ -26,6 +26,19 @@ export const getPosts = async(req, res) => {
     }
 }
 
+//query -> /posts?page=1 -> page = 1 -> consulta de data;
+//params -> /posts/123 -> id = 123 -> para recursos especificos;
+export const getPostsBySearch = async(req, res)=>{
+    const {searchQuery, tags} = req.query;
+    try {
+        const title = new RegExp(searchQuery, 'i'); // Test test TEST -> test
+        const posts = await PostMessage.find({$or: [{title}, {tags: {$in: tags.split(',')}}]});
+        res.json({data: posts});
+    } catch (error) {
+        res.status(404).json({message: error.message})
+    }
+}
+
 export const createPost = async(req, res) => {
     const post = req.body;
     const newPost = new PostMessage({...post, creator: req.userId, createdAt: new Date().toISOString()})
