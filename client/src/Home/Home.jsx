@@ -26,10 +26,7 @@ const Home = () => {
   const searchQuery = query.get("searchQuery");
   
 
-  useEffect(() => {
-    
-    dispatch(getPosts())
-  }, [dispatch])
+  
 
   /* Pagination */
   return (
