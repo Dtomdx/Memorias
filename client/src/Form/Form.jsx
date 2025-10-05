@@ -65,7 +65,7 @@ const Form = ({ currentId, setCurrentId }) => {
 
   if(!user?.result?.name){
     return (
-      <div className={`p-8`}>
+      <div className={`mt-4`}>
         <p className={`flex justify-center shadow-2xl rounded-2xl p-5`}>
           Por favor Inicia session para crear tus propias memorias
         </p>
@@ -76,14 +76,14 @@ const Form = ({ currentId, setCurrentId }) => {
   
 
   return (
-    <div className={`p-4 shadow-lg mt-8`}>
+    <div className={`p-4 shadow-2xl mt-8 rounded-2xl`}>
       <form
         action=""
-        className={`p-1 flex flex-col justify-center gap-y-6`}
+        className={`p-1 flex flex-col justify-center gap-y-4`}
         onSubmit={handleSubmit}
       >
-        <h4 className={`text-2xl`}>
-          {currentId ? "Editando" : "Creando"} una Memoria
+        <h4 className={`text-2xl text-center`}>
+          {currentId ? "Editando" : "Crear"} una Memoria
         </h4>
 
         <input
@@ -123,22 +123,24 @@ const Form = ({ currentId, setCurrentId }) => {
             onChange={(e) => convertToBase64(e.target.files[0])}
           />
         </div>
-        <div>
-          <button
-            type="submit"
-            className={`mb-2.5 bg-blue-800 text-white uppercase w-full rounded-md py-1`}
-          >
-            Enviar
-          </button>
-        </div>
-        <div>
-          <button
-            type="button"
-            className={`mb-2.5 bg-red-700 text-white uppercase w-full rounded-md py-1`}
-            onClick={clear}
-          >
-            Limpiar
-          </button>
+          <div>
+            <div>
+            <button
+              type="submit"
+              className={`mb-2.5 bg-blue-800 text-white uppercase w-full rounded-md py-1`}
+            >
+              Enviar
+            </button>
+          </div>
+          <div>
+            <button
+              type="button"
+              className={`mb-2.5 bg-red-700 text-white uppercase w-full rounded-md py-1`}
+              onClick={clear}
+            >
+              Limpiar
+            </button>
+          </div>
         </div>
       </form>
     </div>
