@@ -10,15 +10,16 @@ import {createStore, applyMiddleware, compose} from "redux";
 import { thunk} from "redux-thunk"
 import reducers from './reducers';
 
-const store = createStore(
+/* const store = createStore(
   reducers,
   compose(                            // ← Un solo compose que envuelve TODO
     applyMiddleware(thunk),           // ← Middleware
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() // ← DevTools
   )
-);
+); */
 
 
+const store = createStore(reducers, compose(applyMiddleware(thunk)))
 /* tailwind mui */
 import { StyledEngineProvider } from '@mui/material/styles';
 import GlobalStyles from '@mui/material/GlobalStyles';

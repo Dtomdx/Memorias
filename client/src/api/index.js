@@ -1,9 +1,10 @@
 import axios from "axios";
 
-
+//https://memorias-eight.vercel.app/
+//localhost:5000
 const API = axios.create(
     {
-        baseURL: "http://localhost:5000"
+        baseURL: "https://memorias-eight.vercel.app"
     }
 )
 
